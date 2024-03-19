@@ -28,11 +28,16 @@ Future<int> searchGoogle(String query) async {
   try {
     final encodedQuery = Uri.encodeQueryComponent(query);
     //final uri = Uri.parse('https://cors-anywhere.herokuapp.com/https://www.google.com/search?q=%22$encodedQuery%22');
-    final uri = Uri.parse('https://corsproxy.io/?https://www.google.com/search?q=%22$encodedQuery%22');
-    //final uri = Uri.parse('https://www.google.com/search?q=%22$encodedQuery%22');
+    //final uri = Uri.parse('https://corsproxy.io/?https://www.google.com/search?q=%22$encodedQuery%22');
+    final uri = Uri.parse('https://www.google.com/search?q=%22$encodedQuery%22');
     print("searchGoogle started: $query"); // Debug
     print("URL: ${uri}");
-    var response = await http.get(uri);
+    var response = await http.get(
+  uri,
+  headers: {
+    'Access-Control-Allow-Origin': '*', // CORS header
+  },
+);
     print("HTTP status code: ${response.statusCode}"); // Debug
 
     if (response.statusCode == 200) {
